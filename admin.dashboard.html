@@ -1,0 +1,72 @@
+<!-- dashboard.html updated with article queue + draft management -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Dashboard – CryptoKidd</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="container">
+    <h1>CryptoKidd Admin Dashboard</h1>
+
+    <section>
+      <h2>📥 Topic Queue</h2>
+      <form id="topicForm">
+        <input type="text" id="newTopic" placeholder="Enter topic title" required />
+        <button type="submit">Add Topic</button>
+      </form>
+      <ul id="topicList"></ul>
+    </section>
+
+    <section>
+      <h2>📝 Draft Articles</h2>
+      <ul id="draftList"></ul>
+    </section>
+  </div>
+
+  <script type="module">
+    import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+    const supabase = createClient('https://your-project.supabase.co', 'public-anon-key');
+
+    const topicForm = document.getElementById('topicForm');
+    const topicInput = document.getElementById('newTopic');
+    const topicList = document.getElementById('topicList');
+    const draftList = document.getElementById('draftList');
+
+    async function loadTopics() {
+      const { data } = await supabase.from('article_queue').select('*').eq('status', 'pending').order('created_at', { ascending: false });
+      topicList.innerHTML = data.map(t => `<li>${t.topic}</li>`).join('');
+    }
+
+    async function loadDrafts() {
+      const { data } = await supabase.from('articles').select('*').eq('status', 'draft').order('created_at', { ascending: false });
+      draftList.innerHTML = data.map(d => \`<li><strong>\${d.title}</strong><br/><button onclick="publish('\${d.id}')">Publish</button> <button onclick="remove('\${d.id}')">Delete</button></li>\`).join('');
+    }
+
+    topicForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const topic = topicInput.value.trim();
+      if (topic) {
+        await supabase.from('article_queue').insert({ topic });
+        topicInput.value = '';
+        loadTopics();
+      }
+    });
+
+    window.publish = async function(id) {
+      await supabase.from('articles').update({ status: 'published', reviewed: true }).eq('id', id);
+      loadDrafts();
+    }
+
+    window.remove = async function(id) {
+      await supabase.from('articles').delete().eq('id', id);
+      loadDrafts();
+    }
+
+    loadTopics();
+    loadDrafts();
+  </script>
+</body>
+</html>

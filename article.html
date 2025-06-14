@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Article – CryptoKidd</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="container">
+    <h1 id="title">Loading article...</h1>
+    <p id="meta"></p>
+    <article id="content"></article>
+  </div>
+
+  <script type="module">
+    import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+    const supabase = createClient('https://your-project.supabase.co', 'public-anon-key');
+
+    function getQueryParam(param) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    }
+
+    async function loadArticle() {
+      const id = getQueryParam("id");
+      if (!id) {
+        document.getElementById("title").textContent = "Article not found.";
+        return;
+      }
+
+      const { data, error } = await supabase.from("articles").select("*").eq("id", id).single();
+      if (error || !data) {
+        document.getElementById("title").textContent = "Article not found.";
+        return;
+      }
+
+      document.getElementById("title").textContent = data.title;
+      document.getElementById("meta").textContent = `By ${data.author || "CryptoKid"} • ${new Date(data.created_at).toLocaleDateString()}`;
+      document.getElementById("content").innerHTML = data.content.replace(/\n/g, "<br/>");
+    }
+
+    loadArticle();
+  </script>
+</body>
+</html>

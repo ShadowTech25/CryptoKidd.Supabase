@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Market Overview – CryptoKidd</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="container">
+    <h1>Live Market Prices</h1>
+    <table border="1" cellspacing="0" cellpadding="8">
+      <thead>
+        <tr>
+          <th>Token</th>
+          <th>Price (USD)</th>
+          <th>24h Change</th>
+        </tr>
+      </thead>
+      <tbody id="marketTable"></tbody>
+    </table>
+  </div>
+
+  <script>
+    const tokens = ["bitcoin", "ethereum", "solana", "binancecoin", "dogecoin"];
+
+    async function fetchMarketData() {
+      const url = \`https://api.coingecko.com/api/v3/simple/price?ids=\${tokens.join(",")}&vs_currencies=usd&include_24hr_change=true\`;
+      const res = await fetch(url);
+      const data = await res.json();
+
+      const table = document.getElementById("marketTable");
+      table.innerHTML = tokens.map(token => {
+        const price = data[token].usd.toFixed(2);
+        const change = data[token].usd_24h_change.toFixed(2);
+        const color = change >= 0 ? 'green' : 'red';
+        return \`
+          <tr>
+            <td>\${token.charAt(0).toUpperCase() + token.slice(1)}</td>
+            <td>$\${price}</td>
+            <td style="color:\${color}">\${change}%</td>
+          </tr>
+        \`;
+      }).join('');
+    }
+
+    fetchMarketData();
+    setInterval(fetchMarketData, 30000); // Refresh every 30s
+  </script>
+</body>
+</html>

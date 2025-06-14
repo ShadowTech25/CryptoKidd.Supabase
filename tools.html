@@ -1,0 +1,696 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Utility &amp; Tools</title>
+<style>
+    body {
+      background-color: #000;
+      color: #FFD700;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      font-size: 2rem;
+    }
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+    .tool-card {
+      background-color: #111;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid #FFD700;
+      box-shadow: 0 0 10px #FFD70033;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: transform 0.2s;
+    }
+    .tool-card:hover {
+      transform: translateY(-5px);
+    }
+    .tool-icon {
+      width: 100%;
+      padding: 20px;
+      background: linear-gradient(to right, #FFD700, #6A0DAD);
+    }
+    .tool-icon img {
+      width: 40px;
+      height: 40px;
+    }
+    .tool-content {
+      padding: 20px;
+    }
+    .tool-title {
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin: 10px 0;
+    }
+    .tool-category {
+      background: #333;
+      padding: 5px 10px;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      display: inline-block;
+    }
+    .tool-desc {
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+    .open-btn {
+      margin-top: 15px;
+      padding: 8px 16px;
+      background-color: #FFD700;
+      color: #000;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .favorite-btn {
+      margin-top: 10px;
+      background: none;
+      border: none;
+      color: #FFD700;
+      font-size: 20px;
+      cursor: pointer;
+    }
+    .favorite-btn.active {
+      color: #FF4500;
+    }
+    .filters {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .filter-btn {
+      background-color: #FFD700;
+      color: #000;
+      padding: 8px 16px;
+      border: none;
+      cursor: pointer;
+      margin-right: 10px;
+      font-weight: bold;
+      border-radius: 5px;
+    }
+    .filter-btn.active {
+      background-color: #6A0DAD;
+      color: #fff;
+    }
+  
+    .tool-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+    }
+    .tool-desc {
+      flex-grow: 1;
+    }
+    
+    .tool-card {
+      height: 100%;
+      min-height: 360px;
+    }
+    
+.nav-wrapper {
+  display: none;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  background-color: #111;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.nav-wrapper.show {
+  display: flex;
+}
+
+.nav-section {
+  border-top: 1px solid #FFD700;
+  padding-top: 15px;
+  padding-bottom: 10px;
+  margin-top: 5px;
+}
+
+.nav-section h3 {
+  color: #FFD700;
+  margin: 0 0 10px;
+  font-size: 1rem;
+  font-family: Arial, sans-serif;
+  text-transform: uppercase;
+  text-align: left;
+  padding-left: 10px;
+}
+
+.nav-section a {
+  color: #FFD700;
+  text-decoration: none;
+  display: block;
+  margin: 6px 10px;
+  font-weight: bold;
+  font-size: 0.95rem;
+  font-family: Arial, sans-serif;
+  text-align: left;
+  padding-left: 10px;
+}
+
+.nav-section a:hover {
+  color: white;
+}
+
+.tool-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.tool-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 80px;
+  background: linear-gradient(to right, #FFD700, #6A0DAD);
+}
+
+.tool-icon img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+
+.tool-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.tool-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 100px;
+  background: linear-gradient(to right, #FFD700, #6A0DAD);
+  overflow: hidden;
+}
+
+.tool-icon img {
+  width: 40px;
+  height: 40px;
+  max-width: 100%;
+  object-fit: contain;
+  display: block;
+  margin: auto;
+  align-self: center;
+}
+
+.tool-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+  height: 100%;
+  min-height: 360px;
+}
+
+.tool-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100px;
+  min-height: 100px;
+  padding: 20px 0;
+  background: linear-gradient(to right, #FFD700, #6A0DAD);
+  overflow: hidden;
+}
+
+.tool-icon img {
+  width: 40px;
+  height: 40px;
+  max-width: 100%;
+  object-fit: contain;
+  margin: auto;
+  display: block;
+  align-self: center;
+}
+
+.nav-section h3 {
+  text-align: center !important;
+}
+
+#pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 40px;
+}
+
+#pagination-container button {
+  padding: 6px 12px;
+  font-weight: bold;
+  border-radius: 6px;
+  border: 1px solid #FFD700;
+  background-color: #111;
+  color: #FFD700;
+  cursor: pointer;
+}
+
+#pagination-container button:hover {
+  background-color: #FFD700;
+  color: #000;
+}
+
+#pagination-container button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.market-ticker {
+  background: #111;
+  overflow: hidden;
+  white-space: nowrap;
+  border-bottom: 1px solid #FFD700;
+  padding: 10px 0;
+}
+.ticker-track {
+  display: inline-block;
+  padding-left: 100%;
+  animation: scroll-left 30s linear infinite;
+}
+.ticker-item {
+  display: inline-block;
+  margin-right: 40px;
+  font-size: 1rem;
+}
+@keyframes scroll-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+</style>
+</head>
+<body>
+<div class="market-ticker">
+<div class="ticker-track" id="tickerTrack"></div>
+</div>
+<nav class="navbar">
+<div class="logo">CryptoKid</div>
+<div class="hamburger" onclick="toggleMenu()">
+<div></div>
+<div></div>
+<div></div>
+</div>
+</nav><div class="nav-wrapper" id="navMenu">
+<div class="nav-section">
+<h3>Main</h3>
+<a href="index.html">Home</a>
+<a href="about.html">About</a>
+<a href="contact.html">Contact</a>
+</div>
+<div class="nav-section">
+<h3>Learn</h3>
+<a href="articles.html">Articles</a>
+<a href="guides.html">Guides</a>
+</div>
+<div class="nav-section">
+<h3>Tools</h3>
+<a href="markets.html">Markets</a>
+<a href="tools.html">Tools</a>
+<a href="dashboard.html">Dashboard</a>
+</div>
+</div><script>
+function toggleMenu() {
+  const navMenu = document.getElementById("navMenu");
+  navMenu.classList.toggle("show");
+}
+</script>
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Utility &amp; Tools</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap');
+
+    body {
+      margin: 0;
+      background-color: #000;
+    }
+
+    .navbar {
+      background-color: #000;
+      border-bottom: 3px solid #FFD700;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      font-family: 'UnifrakturCook', cursive;
+    }
+
+    .logo {
+      font-size: 2rem;
+      color: #FFD700;
+    }
+
+    .hamburger {
+      width: 30px;
+      height: 21px;
+      position: relative;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .hamburger div {
+      height: 3px;
+      background-color: #FFD700;
+      border-radius: 2px;
+      width: 100%;
+    }
+
+    .nav-links {
+      display: none;
+      flex-direction: column;
+      background-color: #000;
+      padding: 20px;
+    }
+
+    .nav-links.show {
+      display: flex;
+    }
+
+    .nav-links li {
+      list-style: none;
+      margin: 10px 0;
+    }
+
+    .nav-links li a {
+      color: #FFD700;
+      text-decoration: none;
+      font-family: Arial, sans-serif;
+      font-weight: bold;
+    }
+
+    .nav-links li a:hover {
+      color: white;
+    }
+
+    @media (min-width: 768px) {
+      .hamburger {
+        display: none;
+      }
+      .nav-links {
+        display: flex !important;
+        flex-direction: row;
+        justify-content: flex-end;
+        padding: 0;
+        gap: 20px;
+      }
+      .nav-links li {
+        margin: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+<div style="margin-bottom: 30px;"></div><div class="filters">
+<button class="filter-btn active" onclick="filterCategory('all')">All Tools</button>
+<button class="filter-btn" onclick="filterCategory('market')">Market Tools</button>
+<button class="filter-btn" onclick="filterCategory('defi')">DeFi Tools</button>
+<button class="filter-btn" onclick="filterCategory('portfolio')">Portfolio Tools</button>
+</div><div class="filters">
+<button class="filter-btn" onclick="filterCategory('wallet')">Wallet Tracking</button>
+<button class="filter-btn" onclick="filterCategory('analysis')">Token Analysis</button>
+<button class="filter-btn" onclick="filterCategory('presale')">Presale Tools</button>
+</div><div class="filters" style="margin: 20px auto; text-align: center; max-width: 600px;"><select onchange="filterByDropdown(this.value)" style="padding: 12px 16px; width: 100%; max-width: 600px; border-radius: 8px; border: 2px solid #FFD700; font-size: 1rem; background-color: #111; color: #FFD700; appearance: none; background-image: url('data:image/svg+xml;utf8,&lt;svg fill=&quot;%23FFD700&quot; height=&quot;24&quot; viewBox=&quot;0 0 24 24&quot; width=&quot;24&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;&lt;path d=&quot;M7 10l5 5 5-5z&quot;/&gt;&lt;/svg&gt;'); background-repeat: no-repeat; background-position-x: 98%; background-position-y: 50%;"><option value="all">Select Category</option><option value="markettools">Market Tools</option><option value="defitools">DeFi Tools</option><option value="portfoliotools">Portfolio Tools</option><option value="wallettracking">Wallet Tracking</option><option value="tokenanalysis">Token Analysis</option><option value="presaletools">Presale Tools</option></select></div>
+<script>
+    function toggleMenu() {
+      document.getElementById('navMenu').classList.toggle('show');
+    }
+  
+function searchCategory(query) {
+  const toolCards = document.querySelectorAll('.tool-card');
+  query = query.toLowerCase();
+  toolCards.forEach(card => {
+    const category = card.querySelector('.tool-category').textContent.toLowerCase();
+    const title = card.querySelector('.tool-title').textContent.toLowerCase();
+    card.style.display = (category.includes(query) || title.includes(query)) ? 'block' : 'none';
+  });
+}
+
+function filterByDropdown(value) {
+  if (value === "all") {
+    document.querySelectorAll('.tool-card').forEach(card => card.style.display = 'block');
+    return;
+  }
+  document.querySelectorAll('.tool-card').forEach(card => {
+    const category = card.getAttribute('data-category');
+    card.style.display = category === value ? 'block' : 'none';
+  });
+}
+</script>
+</body>
+</html>
+<!-- Filters Section (Row 1) -->
+<!-- Filters Section (Row 2 - Functional Categories) -->
+<div class="grid-container">
+<div class="tool-card" data-category="market">
+<div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/line-chart.png"/></div>
+<div class="tool-content">
+<div class="tool-title">Price Tracker</div>
+<div class="tool-category">Market Data</div>
+<div class="tool-desc">Monitor real-time prices of the top cryptocurrencies and react quickly to major moves.</div>
+<button class="open-btn">Open</button>
+<button class="favorite-btn" onclick="toggleFavorite(this)">☆</button>
+</div>
+</div>
+<div class="tool-card" data-category="defi">
+<div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/swap.png"/></div>
+<div class="tool-content">
+<div class="tool-title">Token Swap Analyzer</div>
+<div class="tool-category">DeFi</div>
+<div class="tool-desc">Evaluate the best swaps for your tokens based on current DEX rates and slippage estimates.</div>
+<button class="open-btn">Open</button>
+<button class="favorite-btn" onclick="toggleFavorite(this)">☆</button>
+</div>
+</div>
+<div class="tool-card" data-category="portfolio">
+<div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/comments.png"/></div>
+<div class="tool-content">
+<div class="tool-title">Portfolio Analyzer</div>
+<div class="tool-category">Portfolio</div>
+<div class="tool-desc">Track your crypto portfolio value and gain/losses over time.</div>
+<button class="open-btn">Open</button>
+<button class="favorite-btn" onclick="toggleFavorite(this)">☆</button>
+</div>
+</div>
+<div class="tool-card" data-category="defi">
+<div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/blockchain.png"/></div>
+<div class="tool-content">
+<div class="tool-title">Gas Fee Checker</div>
+<div class="tool-category">DeFi</div>
+<div class="tool-desc">Check live gas fees across popular blockchains to choose optimal times for transactions.</div>
+<button class="open-btn">Open</button>
+<button class="favorite-btn" onclick="toggleFavorite(this)">☆</button>
+</div>
+</div>
+<div class="tool-card" data-category="market">
+<div class="tool-icon"><img alt="Gauge Icon" height="40" src="https://cdn-icons-png.flaticon.com/512/181/181546.png" width="40"/></div>
+<div class="tool-content">
+<div class="tool-title">Market Sentiment Gauge</div>
+<div class="tool-category">Market</div>
+<div class="tool-desc">Analyze crypto market mood using a fear and greed sentiment indicator.</div>
+<button class="open-btn">Open</button>
+<button class="favorite-btn" onclick="toggleFavorite(this)">☆</button>
+</div>
+</div>
+<div class="tool-card" data-category="portfolio">
+<div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/investment-portfolio.png"/></div>
+<div class="tool-content">
+<div class="tool-title">Profit/Loss Tracker</div>
+<div class="tool-category">Portfolio</div>
+<div class="tool-desc">Input past buys/sells to calculate your realized profit or loss.</div>
+<button class="open-btn">Open</button>
+<button class="favorite-btn" onclick="toggleFavorite(this)">☆</button>
+</div>
+</div>
+<div class="tool-card" data-category="wallet">
+<div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/wallet--v1.png"/></div>
+<div class="tool-content">
+<div class="tool-title">Wallet Tracker</div>
+<div class="tool-category">Wallet</div>
+<div class="tool-desc">Monitor wallet balances and track changes in real time.</div>
+<button class="open-btn">Open</button>
+<button class="favorite-btn" onclick="toggleFavorite(this)">☆</button>
+</div>
+</div>
+<div class="tool-card" data-category="analysis">
+<div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/data-configuration.png"/></div>
+<div class="tool-content">
+<div class="tool-title">Token Scorecard</div>
+<div class="tool-category">Analysis</div>
+<div class="tool-desc">Rate and review tokens by fundamentals, utility, and traction.</div>
+<button class="open-btn">Open</button>
+<button class="favorite-btn" onclick="toggleFavorite(this)">☆</button>
+</div>
+</div>
+<div class="tool-card" data-category="unlock">
+<div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/unlock--v1.png"/></div>
+<div class="tool-content">
+<div class="tool-title">Unlock Heatmap</div>
+<div class="tool-category">Unlock</div>
+<div class="tool-desc">View upcoming token unlocks and vesting schedules.</div>
+<button class="open-btn">Open</button>
+<button class="favorite-btn" onclick="toggleFavorite(this)">☆</button>
+</div>
+</div>
+<div class="tool-card" data-category="presale">
+<div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/bullish.png"/></div>
+<div class="tool-content">
+<div class="tool-title">Presale Radar</div>
+<div class="tool-category">Presale</div>
+<div class="tool-desc">Discover trending presales and estimate potential ROI.</div>
+<button class="open-btn">Open</button>
+<button class="favorite-btn" onclick="toggleFavorite(this)">☆</button>
+</div>
+</div>
+<div class="tool-card" data-category="portfolio"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/investment-portfolio.png"/></div><div class="tool-content"><div class="tool-title">ROI Calculator</div><div class="tool-category">Portfolio</div><div class="tool-desc">Calculate return on investment from entry to exit with your quantity.</div><a class="open-btn" href="tools/11.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="portfolio"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/accounting.png"/></div><div class="tool-content"><div class="tool-title">Profit/Loss Tracker</div><div class="tool-category">Portfolio</div><div class="tool-desc">Track multiple trades and see net profit/loss.</div><a class="open-btn" href="tools/12.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="analysis"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/liquidity.png"/></div><div class="tool-content"><div class="tool-title">Token Liquidity Viewer</div><div class="tool-category">Analysis</div><div class="tool-desc">Visualize liquidity depth for tokens like ETH, SOL, SHIB.</div><a class="open-btn" href="tools/13.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="market"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/money-exchange.png"/></div><div class="tool-content"><div class="tool-title">DEX vs CEX Price Gap</div><div class="tool-category">Market</div><div class="tool-desc">See price gaps between DEXs and CEXs to spot arbitrage.</div><a class="open-btn" href="tools/14.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="market"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/gas-pump.png"/></div><div class="tool-content"><div class="tool-title">Gas Tracker</div><div class="tool-category">Market</div><div class="tool-desc">View current gas prices across popular chains to avoid high fee times.</div><a class="open-btn" href="tools/15.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="market"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/line-chart.png"/></div><div class="tool-content"><div class="tool-title">Altcoin Season Index</div><div class="tool-category">Market</div><div class="tool-desc">Check if it's Bitcoin, Altcoin, or Neutral season in the market.</div><a class="open-btn" href="tools/16.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="defi"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/bank-cards.png"/></div><div class="tool-content"><div class="tool-title">DeFi Yield Estimator</div><div class="tool-category">Defi</div><div class="tool-desc">Estimate yield on DeFi investments using APY and deposit.</div><a class="open-btn" href="tools/17.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="analysis"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/fire-element.png"/></div><div class="tool-content"><div class="tool-title">Token Burn Tracker</div><div class="tool-category">Analysis</div><div class="tool-desc">View token burn stats to gauge supply deflation trends.</div><a class="open-btn" href="tools/18.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="portfolio"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/restart.png"/></div><div class="tool-content"><div class="tool-title">Re-Entry Planner</div><div class="tool-category">Portfolio</div><div class="tool-desc">Calculate dip-based re-entry prices for long-term buys.</div><a class="open-btn" href="tools/19.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="portfolio"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/save-money.png"/></div><div class="tool-content"><div class="tool-title">Savings Growth Estimator</div><div class="tool-category">Portfolio</div><div class="tool-desc">Simulate long-term crypto savings growth using compound interest.</div><a class="open-btn" href="tools/20.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="market"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/bitcoin--v1.png"/></div><div class="tool-content"><div class="tool-title">BTC/ETH Dominance Tracker</div><div class="tool-category">Market</div><div class="tool-desc">Track Bitcoin and Ethereum dominance for macro market trends.</div><a class="open-btn" href="tools/21.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="analysis"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/non-fungible-token.png"/></div><div class="tool-content"><div class="tool-title">NFT Floor Price Viewer</div><div class="tool-category">Analysis</div><div class="tool-desc">Simulate floor price data for major NFT collections.</div><a class="open-btn" href="tools/22.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="analysis"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/distribution.png"/></div><div class="tool-content"><div class="tool-title">Wallet Distribution Analyzer</div><div class="tool-category">Analysis</div><div class="tool-desc">Assess token centralization and wallet tiers.</div><a class="open-btn" href="tools/23.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="market"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/megaphone.png"/></div><div class="tool-content"><div class="tool-title">Social Hype Monitor</div><div class="tool-category">Market</div><div class="tool-desc">Check token social buzz and sentiment spikes.</div><a class="open-btn" href="tools/24.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="wallet"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/gift.png"/></div><div class="tool-content"><div class="tool-title">Airdrop Radar</div><div class="tool-category">Wallet</div><div class="tool-desc">Find upcoming airdrops and check wallet eligibility.</div><a class="open-btn" href="tools/25.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="wallet"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/money-bag.png"/></div><div class="tool-content"><div class="tool-title">Smart Money Tracker</div><div class="tool-category">Wallet</div><div class="tool-desc">Analyze wallets tagged as 'smart money' and view their recent moves.</div><a class="open-btn" href="tools/26.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="analysis"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/storytelling.png"/></div><div class="tool-content"><div class="tool-title">Token Narrative Tracker</div><div class="tool-category">Analysis</div><div class="tool-desc">Discover trending narratives and leading tokens per theme.</div><a class="open-btn" href="tools/27.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="presale"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/rocket--v1.png"/></div><div class="tool-content"><div class="tool-title">Presale ROI Estimator</div><div class="tool-category">Presale</div><div class="tool-desc">Simulate presale profits based on price inputs.</div><a class="open-btn" href="tools/28.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="market"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/gas-pump.png"/></div><div class="tool-content"><div class="tool-title">Gas Fee Estimator</div><div class="tool-category">Market</div><div class="tool-desc">Estimate Ethereum gas fees across speed tiers.</div><a class="open-btn" href="tools/3.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="portfolio"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/scale.png"/></div><div class="tool-content"><div class="tool-title">Multi-Token Rebalancer</div><div class="tool-category">Portfolio</div><div class="tool-desc">Adjust crypto allocation based on selected risk profile.</div><a class="open-btn" href="tools/30.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="market"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/activity-history.png"/></div><div class="tool-content"><div class="tool-title">Token Volatility Scanner</div><div class="tool-category">Market</div><div class="tool-desc">Scan 7-day volatility for tokens like BTC, ETH, DOGE, SOL.</div><a class="open-btn" href="tools/40.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="analysis"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/group-foreground-selected.png"/></div><div class="tool-content"><div class="tool-title">Holder Concentration Checker</div><div class="tool-category">Analysis</div><div class="tool-desc">Analyze whale risk and decentralization for any token.</div><a class="open-btn" href="tools/41.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="analysis"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/network.png"/></div><div class="tool-content"><div class="tool-title">Multi-Chain Presence Checker</div><div class="tool-category">Analysis</div><div class="tool-desc">Detect which blockchains a token is supported on.</div><a class="open-btn" href="tools/42.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="portfolio"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/high-risk.png"/></div><div class="tool-content"><div class="tool-title">Degen Risk Calculator</div><div class="tool-category">Portfolio</div><div class="tool-desc">Estimate how risky your degen token allocations are.</div><a class="open-btn" href="tools/43.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="infrastructure"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/speed.png"/></div><div class="tool-content"><div class="tool-title">Network Uptime Tracker</div><div class="tool-category">Infrastructure</div><div class="tool-desc">Track reliability of top blockchains like ETH, SOL, ARB.</div><a class="open-btn" href="tools/44.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="presale"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/calendar.png"/></div><div class="tool-content"><div class="tool-title">Token Launch Calendar</div><div class="tool-category">Presale</div><div class="tool-desc">View upcoming token launch dates and project types.</div><a class="open-btn" href="tools/45.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="governance"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/vote.png"/></div><div class="tool-content"><div class="tool-title">Voting Power Checker</div><div class="tool-category">Governance</div><div class="tool-desc">Calculate DAO voting power based on token holdings.</div><a class="open-btn" href="tools/46.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="security"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/ok.png"/></div><div class="tool-content"><div class="tool-title">Token Audit Lookup</div><div class="tool-category">Security</div><div class="tool-desc">Check if a token has been audited for safety.</div><a class="open-btn" href="tools/47.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="market"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/clock--v1.png"/></div><div class="tool-content"><div class="tool-title">Token Release Tracker</div><div class="tool-category">Market</div><div class="tool-desc">Track token unlock schedules and vesting timelines.</div><a class="open-btn" href="tools/48.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="analysis"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/network-card.png"/></div><div class="tool-content"><div class="tool-title">Ecosystem Analyzer</div><div class="tool-category">Analysis</div><div class="tool-desc">Check token integrations and ecosystem utility.</div><a class="open-btn" href="tools/49.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="discovery"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/search--v1.png"/></div><div class="tool-content"><div class="tool-title">Token Discovery Engine</div><div class="tool-category">Discovery</div><div class="tool-desc">Filter and find tokens by sector like AI, DeFi, or RWA.</div><a class="open-btn" href="tools/50.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="analysis"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/heart-health.png"/></div><div class="tool-content"><div class="tool-title">Token Health Score (1)</div><div class="tool-category">Analysis</div><div class="tool-desc">Simulate a health score for any token.</div><a class="open-btn" href="tools/51.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="analysis"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/medical-symbol.png"/></div><div class="tool-content"><div class="tool-title">Token Health Score (2)</div><div class="tool-category">Analysis</div><div class="tool-desc">Simulate a token's health score using random metrics.</div><a class="open-btn" href="tools/52.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="infrastructure"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/blockchain-technology.png"/></div><div class="tool-content"><div class="tool-title">Blockchain Explorer Snapshot</div><div class="tool-category">Infrastructure</div><div class="tool-desc">Simulate recent blockchain activity including blocks and fees.</div><a class="open-btn" href="tools/53.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="analysis"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/funny.png"/></div><div class="tool-content"><div class="tool-title">Meme Coin Detector</div><div class="tool-category">Analysis</div><div class="tool-desc">Detect likely meme coins from name/ticker analysis.</div><a class="open-btn" href="tools/54.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="market"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/gas-pump.png"/></div><div class="tool-content"><div class="tool-title">Cross-Chain Gas Comparator</div><div class="tool-category">Market</div><div class="tool-desc">Compare gas fees across Ethereum, BSC, Arbitrum, and Polygon.</div><a class="open-btn" href="tools/55.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="presale"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/timeline.png"/></div><div class="tool-content"><div class="tool-title">Launch Timeline Tracker</div><div class="tool-category">Presale</div><div class="tool-desc">Track token launches across Presale, IDO, and Exchange Listing.</div><a class="open-btn" href="tools/56.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="sentiment"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/artificial-intelligence.png"/></div><div class="tool-content"><div class="tool-title">AI Sentiment Breakdown</div><div class="tool-category">Sentiment</div><div class="tool-desc">View sentiment scores from social/news signals using AI.</div><a class="open-btn" href="tools/57.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="defi"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/defi.png"/></div><div class="tool-content"><div class="tool-title">DeFi Protocol Explorer</div><div class="tool-category">Defi</div><div class="tool-desc">Compare TVL, APY ranges, and risk levels across DeFi platforms.</div><a class="open-btn" href="tools/58.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="trading"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/impact.png"/></div><div class="tool-content"><div class="tool-title">Market Impact Estimator</div><div class="tool-category">Trading</div><div class="tool-desc">Estimate slippage and price effects of large buy/sell orders.</div><a class="open-btn" href="tools/59.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="research"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/graph-report.png"/></div><div class="tool-content"><div class="tool-title">Project Activity Score</div><div class="tool-category">Research</div><div class="tool-desc">Rank projects by dev activity, community presence, and media.</div><a class="open-btn" href="tools/60.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="analysis"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/fast.png"/></div><div class="tool-content"><div class="tool-title">Token Velocity Analyzer</div><div class="tool-category">Analysis</div><div class="tool-desc">Analyze how fast a token circulates within its ecosystem.</div><a class="open-btn" href="tools/61.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="market"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/synchronize.png"/></div><div class="tool-content"><div class="tool-title">Exchange Listing Scanner</div><div class="tool-category">Market</div><div class="tool-desc">Scan newly listed tokens across major crypto exchanges.</div><a class="open-btn" href="tools/62.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="presale"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/rocket.png"/></div><div class="tool-content"><div class="tool-title">Token Launchpad Scanner</div><div class="tool-category">Presale</div><div class="tool-desc">Track upcoming tokens launching through IDOs, IEOs, and presales.</div><a class="open-btn" href="tools/63.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="infrastructure"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/share--v1.png"/></div><div class="tool-content"><div class="tool-title">Multi-Chain Token Analyzer</div><div class="tool-category">Infrastructure</div><div class="tool-desc">Analyze token presence and interoperability across blockchains.</div><a class="open-btn" href="tools/64.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="research"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/source-code.png"/></div><div class="tool-content"><div class="tool-title">Developer Activity Tracker</div><div class="tool-category">Research</div><div class="tool-desc">Monitor GitHub and commit activity for projects.</div><a class="open-btn" href="tools/65.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="security"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/user-shield.png"/></div><div class="tool-content"><div class="tool-title">Web3 Identity Verifier</div><div class="tool-category">Security</div><div class="tool-desc">Verify Web3 identities using wallet or ENS.</div><a class="open-btn" href="tools/66.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="portfolio"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/wallet--v1.png"/></div><div class="tool-content"><div class="tool-title">Multi-Wallet Balance Aggregator</div><div class="tool-category">Portfolio</div><div class="tool-desc">Aggregate balances across multiple wallet addresses.</div><a class="open-btn" href="tools/67.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="defi"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/money.png"/></div><div class="tool-content"><div class="tool-title">DeFi Lending ROI Estimator</div><div class="tool-category">Defi</div><div class="tool-desc">Estimate annual ROI from lending assets on DeFi platforms.</div><a class="open-btn" href="tools/68.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="governance"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/collaboration.png"/></div><div class="tool-content"><div class="tool-title">DAO Voting Power Calculator</div><div class="tool-category">Governance</div><div class="tool-desc">Calculate your DAO voting power from token supply.</div><a class="open-btn" href="tools/69.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="nft"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/certificate.png"/></div><div class="tool-content"><div class="tool-title">NFT Rarity Evaluator</div><div class="tool-category">Nft</div><div class="tool-desc">Simulate NFT rarity scores based on traits.</div><a class="open-btn" href="tools/70.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="fees"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/receipt-dollar.png"/></div><div class="tool-content"><div class="tool-title">Token Transaction Cost Estimator</div><div class="tool-category">Fees</div><div class="tool-desc">Estimate token transfer costs based on gas and network.</div><a class="open-btn" href="tools/71.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="analysis"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/pie-chart.png"/></div><div class="tool-content"><div class="tool-title">Circulating vs Max Supply Visualizer</div><div class="tool-category">Analysis</div><div class="tool-desc">Visualize how much of a token’s supply is circulating.</div><a class="open-btn" href="tools/72.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="market"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/increase.png"/></div><div class="tool-content"><div class="tool-title">Volume Spike Detector</div><div class="tool-category">Market</div><div class="tool-desc">Detect major volume spikes on specific tokens.</div><a class="open-btn" href="tools/73.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="wallet"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/accounting.png"/></div><div class="tool-content"><div class="tool-title">Multi-Chain Wallet Checker</div><div class="tool-category">Wallet</div><div class="tool-desc">Check a wallet’s balances across multiple blockchains.</div><a class="open-btn" href="tools/74.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="governance"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/poll.png"/></div><div class="tool-content"><div class="tool-title">DAO Proposal Analyzer</div><div class="tool-category">Governance</div><div class="tool-desc">Analyze DAO proposal outcomes by voting distribution.</div><a class="open-btn" href="tools/75.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div><div class="tool-card" data-category="infrastructure"><div class="tool-icon"><img alt="icon" src="https://img.icons8.com/ios/50/split.png"/></div><div class="tool-content"><div class="tool-title">Fork Detector</div><div class="tool-category">Infrastructure</div><div class="tool-desc">Simulate detection of recent blockchain forks.</div><a class="open-btn" href="tools/76.html">Open</a><button class="favorite-btn" onclick="toggleFavorite(this)">☆</button></div></div></div>
+<div id="pagination-container" style="text-align:center; margin: 40px 0;"></div>
+<div id="pagination-container" style="text-align:center; margin: 40px 0;">
+<button class="filter-btn" id="prevBtn" onclick="prevPage()">Prev</button>
+<select id="pageSelect" onchange="goToPage(this.value)">
+<!-- Pages 1–10 -->
+<option value="1">Page 1</option><option value="2">Page 2</option><option value="3">Page 3</option><option value="4">Page 4</option><option value="5">Page 5</option><option value="6">Page 6</option><option value="7">Page 7</option><option value="8">Page 8</option><option value="9">Page 9</option><option value="10">Page 10</option></select>
+<button class="filter-btn" id="nextBtn" onclick="nextPage()">Next</button>
+</div>
+<script>
+    function filterCategory(category) {
+      const buttons = document.querySelectorAll('.filter-btn');
+      buttons.forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.textContent.toLowerCase().includes(category) || category === 'all') {
+          if (btn.textContent.toLowerCase().includes(category)) {
+            btn.classList.add('active');
+          }
+        }
+        if (category === 'all' && btn.textContent.toLowerCase().includes('all tools')) {
+          btn.classList.add('active');
+        }
+      });
+
+      const toolCards = document.querySelectorAll('.tool-card');
+      toolCards.forEach(card => {
+        card.style.display = (category === 'all' || card.dataset.category === category) ? 'block' : 'none';
+      });
+    }
+
+    function toggleFavorite(button) {
+      button.classList.toggle('active');
+      button.innerHTML = button.classList.contains('active') ? '&#9733;' : '&#9734;';
+    }
+  </script>
+<script>
+let currentPage = 1;
+const toolsPerPage = 10;
+
+function paginateTools() {
+  const cards = document.querySelectorAll('.tool-card');
+  const totalPages = Math.ceil(cards.length / toolsPerPage);
+  const start = (currentPage - 1) * toolsPerPage;
+  const end = start + toolsPerPage;
+
+  cards.forEach((card, index) => {
+    card.style.display = (index >= start && index < end) ? 'block' : 'none';
+  });
+
+  document.getElementById('prevBtn').disabled = currentPage === 1;
+  document.getElementById('nextBtn').disabled = currentPage === totalPages;
+
+  const dropdown = document.getElementById('pageSelect');
+  if (dropdown) dropdown.value = currentPage;
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function goToPage(page) {
+  currentPage = parseInt(page);
+  paginateTools();
+}
+
+function nextPage() {
+  const total = document.querySelectorAll('.tool-card').length;
+  const totalPages = Math.ceil(total / toolsPerPage);
+  if (currentPage < totalPages) {
+    currentPage++;
+    paginateTools();
+  }
+}
+
+function prevPage() {
+  if (currentPage > 1) {
+    currentPage--;
+    paginateTools();
+  }
+}
+
+window.onload = paginateTools;
+</script><script>
+async function fetchPrices() {
+  const ids = 'bitcoin,ethereum,solana,bitget-token,ripple,shiba-inu,dogecoin';
+  const url = `https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd`;
+
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+
+    const prices = {
+      'PI': '$0.71',
+      'BTC': `$${data.bitcoin.usd.toLocaleString()}`,
+      'ETH': `$${data.ethereum.usd.toLocaleString()}`,
+      'SOL': `$${data.solana.usd.toLocaleString()}`,
+      'BGB': `$${data['bitget-token'].usd}`,
+      'XRP': `$${data.ripple.usd}`,
+      'SHIB': `$${data['shiba-inu'].usd}`,
+      'DOGE': `$${data.dogecoin.usd}`
+    };
+
+    const ticker = document.getElementById('tickerTrack');
+    ticker.innerHTML = '';
+    for (const [symbol, price] of Object.entries(prices)) {
+      const span = document.createElement('span');
+      span.className = 'ticker-item';
+      span.textContent = `${symbol}: ${price}`;
+      ticker.appendChild(span);
+    }
+  } catch (err) {
+    console.error('Ticker error:', err);
+  }
+}
+fetchPrices();
+setInterval(fetchPrices, 60000);
+</script></body>
+</html>

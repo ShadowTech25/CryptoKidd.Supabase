@@ -1,0 +1,225 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="theme-color" content="#FFD700"/>
+  <title>About – CryptoKid</title>
+  <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet" />
+  <style>
+    body { background:#000; color:#FFD700; font-family:Arial, sans-serif; margin:0; padding:0; }
+
+    .market-ticker {
+      background: #111;
+      color: #FFD700;
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 10px;
+      font-size: 0.9rem;
+      border-bottom: 1px solid #FFD700;
+    }
+
+    .market-ticker span {
+      display: inline-block;
+      white-space: nowrap;
+      padding-right: 40px;
+      animation: scroll-ticker 8s linear infinite;
+    }
+
+    @keyframes scroll-ticker {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+
+    .navbar {
+      background-color: #000;
+      border-bottom: 3px solid #FFD700;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      font-family: 'UnifrakturCook', cursive;
+    }
+
+    .logo {
+      font-size: 2rem;
+      color: #FFD700;
+    }
+
+    .hamburger {
+      width: 30px;
+      height: 21px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+    }
+
+    .hamburger span {
+      height: 3px;
+      background-color: #FFD700;
+      border-radius: 2px;
+    }
+
+    .nav-wrapper {
+      display: none;
+      flex-direction: column;
+      background-color: #111;
+      padding: 20px;
+    }
+
+    .nav-wrapper.show {
+      display: flex;
+    }
+
+    .nav-section {
+      border-top: 1px solid #FFD700;
+      padding: 15px 10px;
+    }
+
+    .nav-section h3 {
+      margin: 0 0 10px;
+      font-size: 1rem;
+      text-transform: uppercase;
+      color: #FFD700;
+      text-align: center;
+    }
+
+    .nav-section a {
+      color: #FFD700;
+      text-decoration: none;
+      font-weight: bold;
+      margin: 6px 0;
+      display: block;
+      text-align: left;
+      padding-left: 10px;
+    }
+
+    .nav-section a:hover {
+      color: white;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #111;
+      border: 1px solid #FFD700;
+      border-radius: 12px;
+    }
+
+    main h1 {
+      text-align: center;
+      font-family: 'UnifrakturCook', cursive;
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+    }
+
+    section.articles-list h2 {
+      text-align: center;
+      color: #FFD700;
+      border-bottom: 1px solid #FFD700;
+      padding-bottom: 5px;
+      margin-top: 30px;
+    }
+
+    section.articles-list p {
+      color: #ccc;
+      line-height: 1.6;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 20px;
+      color: #999;
+      background-color: #000;
+      border-top: 1px solid #FFD700;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+<div class="market-ticker">
+  <span id="ticker-text">Loading live prices...</span>
+</div>
+
+<nav class="navbar">
+  <div class="logo">CryptoKid</div>
+  <div class="hamburger" onclick="document.getElementById('navMenu').classList.toggle('show')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<div class="nav-wrapper" id="navMenu">
+  <div class="nav-section">
+    <h3>Main</h3>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <div class="nav-section">
+    <h3>Learn</h3>
+    <a href="articles.html">Articles</a>
+    <a href="guides.html">Guides</a>
+  </div>
+  <div class="nav-section">
+    <h3>Tools</h3>
+    <a href="markets.html">Markets</a>
+    <a href="tools.html">Tools</a>
+    <a href="dashboard.html">Dashboard</a>
+  </div>
+</div>
+
+<main>
+  <h1>About CryptoKid</h1>
+  <section class="articles-list">
+    <p>
+      CryptoKid isn’t just another crypto blog. It’s a voice for the overlooked trader, the late-night researcher, and the future millionaire lurking in the bear market.
+    </p>
+
+    <h2>Our Mission</h2>
+    <p>
+      To decode crypto — one block at a time. We simplify the complex, expose the hype, and highlight what actually matters. No hype cycles, no moon boy nonsense. Just solid insights, brutal honesty, and plays that matter.
+    </p>
+
+    <h2>Who We Serve</h2>
+    <p>
+      CryptoKid is built for real ones:<br/>
+      – Traders trying to level up<br/>
+      – Beginners who don’t want fluff<br/>
+      – Builders shaping what’s next<br/>
+      – Curious minds who ask the right questions
+    </p>
+
+    <h2>Why Trust Us?</h2>
+    <p>
+      We walk the talk. Every article, guide, and breakdown is written with research, backed by data, and aimed at helping you win — not just scroll. If it’s not useful, we don’t post it.
+    </p>
+
+    <h2>The CryptoKid Vibe</h2>
+    <p>
+      No suits. No spam. No sugar-coating. Just one mission: Help you see the game clearly and make moves that matter.
+    </p>
+  </section>
+</main>
+
+<footer class="footer">
+  <p>© 2025 CryptoKid. Built for those who read between the blocks.</p>
+</footer>
+
+<script>
+  fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1')
+    .then(res => res.json())
+    .then(data => {
+      const ticker = data.map(c => `${c.symbol.toUpperCase()}: $${c.current_price}`).join(' | ');
+      document.getElementById("ticker-text").innerText = ticker;
+    })
+    .catch(() => {
+      document.getElementById("ticker-text").innerText = "Ticker failed to load.";
+    });
+</script>
+
+</body>
+</html>

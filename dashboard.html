@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CryptoKid Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet"/>
+  <style>
+    body { background:#000; color:#FFD700; font-family:Arial, sans-serif; margin:0; padding:0; }
+    .market-ticker { background:#111; color:#FFD700; overflow:hidden; white-space:nowrap; padding:10px; font-size:0.9rem; border-bottom:1px solid #FFD700; }
+    .market-ticker span { display:inline-block; white-space:nowrap; padding-right:40px; animation: scroll-ticker 8s linear infinite; }
+    @keyframes scroll-ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
+    .navbar { background:#000; border-bottom:3px solid #FFD700; display:flex; justify-content:space-between; align-items:center; padding:15px 20px; font-family:'UnifrakturCook', cursive; }
+    .logo { font-size:2rem; color:#FFD700; }
+    .hamburger { width:30px; height:21px; display:flex; flex-direction:column; justify-content:space-between; cursor:pointer; }
+    .hamburger div { height:3px; background:#FFD700; border-radius:2px; }
+
+    .nav-wrapper { display:none; flex-direction:column; background:#111; padding:20px; }
+    .nav-wrapper.show { display:flex; }
+    .nav-section { border-top:1px solid #FFD700; padding:15px 10px; }
+    .nav-section h3 { margin:0 0 10px; font-size:1rem; text-transform:uppercase; color:#FFD700; text-align:center; }
+    .nav-section a { color:#FFD700; text-decoration:none; font-weight:bold; margin:6px 0; display:block; text-align:left; padding-left:10px; }
+    .nav-section a:hover { color:white; }
+
+    .container { max-width:900px; margin:0 auto; padding:20px; }
+    .header { font-family:'UnifrakturCook', cursive; font-size:2.5rem; text-align:center; margin:20px 0; }
+    .card { background:#111; border:1px solid #FFD700; border-radius:8px; padding:20px; margin-bottom:20px; }
+    .button { background:#FFD700; color:#000; padding:10px 15px; font-weight:bold; border:none; border-radius:5px; cursor:pointer; width:100%; margin:5px 0; }
+    .section-title { font-size:1.2rem; margin-bottom:10px; }
+    #auth-links a { color:#FFD700; font-weight:bold; text-decoration:none; margin:0 10px; }
+    #auth-links a:hover { color:white; }
+  </style>
+</head>
+<body>
+  <div class="market-ticker"><span id="ticker-text">Loading live prices...</span></div>
+  <nav class="navbar">
+    <div class="logo">CryptoKid</div>
+    <div class="hamburger" onclick="document.getElementById('navMenu').classList.toggle('show')">
+      <div></div><div></div><div></div>
+    </div>
+  </nav>
+  <h2 id="usernameDisplay" class="header" style="margin-top: 10px;">Welcome, loading...</h2>
+  <div class="container">
+
+<div class="card">
+  <h3 class="section-title">Favorites</h3>
+  <ul id="favorites-list" style="padding-left: 20px;"></ul>
+</div>
+
+<div class="card">
+  <h3 class="section-title">Recent Tools Used</h3>
+  <ul id="recent-list" style="padding-left: 20px;"></ul>
+</div>
+
+  </div>
+  <div class="nav-wrapper" id="navMenu">
+    <div class="nav-section"><h3>Main</h3><a href="index.html">Home</a><a href="about.html">About</a><a href="contact.html">Contact</a></div>
+    <div class="nav-section"><h3>Learn</h3><a href="articles.html">Articles</a><a href="guides.html">Guides</a></div>
+    <div class="nav-section"><h3>Tools</h3><a href="markets.html">Markets</a><a href="tools.html">Tools</a><a href="dashboard.html">Dashboard</a></div>
+  </div>
+
+  <div class="container">
+    <div class="header">CryptoKid Dashboard</div>
+    <div class="card"><h2 style="text-align:center;">Account Access</h2><p id="auth-links" style="text-align:center;">Loading...</p></div>
+
+    <div class="card"><div class="section-title">Welcome, <span id="userEmail">[User]</span></div>
+    <p>Account Tier: <span id="userTier" style="font-weight:bold;">Free</span></p></div>
+
+    <div class="card"><div class="section-title">Upgrade to Premium</div>
+    <button class="button" onclick="payWithStripe()">Pay with Stripe</button>
+    <button class="button" onclick="payWithPayPal()">Pay with PayPal</button>
+    <button class="button" onclick="payWithBTC()">Pay with Bitcoin</button>
+    <button class="button" onclick="payWithPi()">Pay with Pi Coin</button></div>
+
+    <div class="card"><div class="section-title">Account Summary</div>
+    <p>Tools used: <span id="toolsUsed">0</span></p>
+    <p>Alerts set: <span id="alertsSet">0</span></p>
+    <p>Last login: <span id="lastLogin">N/A</span></p></div>
+
+    <div class="card">
+      <div class="section-title">Settings</div>
+      <div class="dropdown-settings">
+        <select onchange="handleSettings(this.value)" style="width:100%; padding:10px; font-weight:bold; background:#000; color:#FFD700; border:1px solid #FFD700; border-radius:5px;">
+          <option selected disabled>Choose an option</option>
+          <option value="username">Username</option>
+          <option value="favorites">Favorites</option>
+          <option value="reset">Reset Password</option>
+          <option value="logout">Log Out</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="card" id="paymentConfirmation" style="display:none; color:#00ff99; border-color:lime;">
+      <strong>Payment confirmed!</strong> Your Premium access will be activated shortly.
+    </div>
+  </div>
+
+  <script>
+    function handleSettings(value) {
+      if (value === "favorites") window.location.href = "favorites.html";
+      else if (value === "reset") window.location.href = "forgot-password.html";
+      else if (value === "logout") window.location.href = "logout.html";
+    }
+
+    fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1')
+      .then(res => res.json())
+      .then(data => {
+        const ticker = data.map(c => `${c.symbol.toUpperCase()}: $${c.current_price}`).join(' | ');
+        document.getElementById("ticker-text").innerText = ticker;
+      })
+      .catch(() => {
+        document.getElementById("ticker-text").innerText = "Ticker failed to load.";
+      });
+  </script>
+
+<!-- Firebase App (the core Firebase SDK) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"></script>
+
+<script>
+  // Your Firebase config (replace with your actual config later)
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT_ID.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  };
+
+  // Initialize Firebase
+  const app = firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+
+  // Check login state
+  auth.onAuthStateChanged(user => {
+    if (user) {
+      document.getElementById("usernameDisplay").innerText = "Welcome, " + (user.displayName || user.email);
+    } else {
+      window.location.href = "login.html"; // Redirect if not logged in
+    }
+  });
+</script>
+
+
+<script>
+// Simulated user data (replace with Firestore reads later)
+const userFavorites = [
+  { name: "Token Scorecard", link: "tool-scorecard.html" },
+  { name: "Unlock Heatmap", link: "tool-unlock-heatmap.html" }
+];
+
+const recentTools = [
+  { name: "Gas Fee Estimator", link: "tool-gas-estimator.html" },
+  { name: "Sentiment Analyzer", link: "tool-sentiment.html" }
+];
+
+function loadDashboardData() {
+  const favList = document.getElementById("favorites-list");
+  const recentList = document.getElementById("recent-list");
+
+  userFavorites.forEach(tool => {
+    const li = document.createElement("li");
+    li.innerHTML = `<a href="${tool.link}">${tool.name}</a>`;
+    favList.appendChild(li);
+  });
+
+  recentTools.forEach(tool => {
+    const li = document.createElement("li");
+    li.innerHTML = `<a href="${tool.link}">${tool.name}</a>`;
+    recentList.appendChild(li);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", loadDashboardData);
+</script>
+
+</body>
+</html>

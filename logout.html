@@ -1,0 +1,231 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="#FFD700" name="theme-color"/>
+<title>Sign Out – CryptoKid</title>
+<link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&amp;display=swap" rel="stylesheet"/>
+<style>
+    body {
+      background: #000;
+      color: #FFD700;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    .navbar {
+      background-color: #000;
+      border-bottom: 3px solid #FFD700;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      font-family: 'UnifrakturCook', cursive;
+    }
+    .logo {
+      font-size: 2rem;
+      color: #FFD700;
+    }
+    .market-ticker {
+      background: #111;
+      color: #FFD700;
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 10px;
+      font-size: 0.9rem;
+      border-bottom: 1px solid #FFD700;
+      text-align: center;
+    }
+    .logout-message {
+      max-width: 600px;
+      margin: 80px auto;
+      padding: 30px;
+      background: #111;
+      border: 1px solid #FFD700;
+      border-radius: 8px;
+    }
+    .footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.85rem;
+      background: #000;
+      border-top: 1px solid #FFD700;
+      color: #FFD700;
+    }
+  
+@keyframes scroll-ticker {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+.market-ticker span {
+  display: inline-block;
+  white-space: nowrap;
+  padding-right: 40px;
+  animation: scroll-ticker 15s linear infinite;
+}
+
+.hamburger {
+  width: 30px;
+  height: 21px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+}
+.hamburger div {
+  height: 3px;
+  background-color: #FFD700;
+  border-radius: 2px;
+}
+.nav-wrapper {
+  display: none;
+  flex-direction: column;
+  background-color: #111;
+  padding: 20px;
+}
+.nav-wrapper.show {
+  display: flex;
+}
+.nav-section {
+  border-top: 1px solid #FFD700;
+  padding: 15px 10px;
+}
+.nav-section h3 {
+  margin: 0 0 10px;
+  font-size: 1rem;
+  text-transform: uppercase;
+  color: #FFD700;
+  text-align: center;
+}
+.nav-section a {
+  color: #FFD700;
+  text-decoration: none;
+  font-weight: bold;
+  margin: 6px 0;
+  display: block;
+  text-align: center;
+}
+.nav-section a:hover {
+  color: white;
+}
+
+.nav-section a {
+  text-align: left !important;
+  padding-left: 12px;
+}
+</style>
+<style>
+  .hamburger {
+    width: 30px;
+    height: 21px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+  }
+  .hamburger div {
+    height: 3px;
+    background-color: #FFD700;
+    border-radius: 2px;
+  }
+  .nav-wrapper {
+    display: none;
+    flex-direction: column;
+    background-color: #111;
+    padding: 20px;
+  }
+  .nav-wrapper.show {
+    display: flex;
+  }
+  .nav-section {
+    border-top: 1px solid #FFD700;
+    padding: 15px 10px;
+  }
+  .nav-section h3 {
+    margin: 0 0 10px;
+    font-size: 1rem;
+    text-transform: uppercase;
+    color: #FFD700;
+    text-align: center;
+  }
+  .nav-section a {
+    color: #FFD700;
+    text-decoration: none;
+    font-weight: bold;
+    margin: 6px 0;
+    display: block;
+    text-align: center;
+  }
+  .nav-section a:hover {
+    color: white;
+  }
+</style>
+<script>
+  function toggleMenu() {
+    document.getElementById("navMenu").classList.toggle("show");
+  }
+</script>
+</head>
+<body>
+<div class="market-ticker"><span id="ticker-text"></span></div>
+<nav class="navbar">
+<div class="logo">CryptoKid</div>
+<div class="hamburger" onclick="toggleMenu()">
+<div></div><div></div><div></div>
+</div>
+</nav>
+<div class="nav-wrapper" id="navMenu">
+<div class="nav-section">
+<h3>Main</h3>
+<a href="index.html">Home</a>
+<a href="about.html">About</a>
+<a href="contact.html">Contact</a>
+</div>
+<div class="nav-section">
+<h3>Learn</h3>
+<a href="articles.html">Articles</a>
+<a href="guides.html">Guides</a>
+</div>
+<div class="nav-section">
+<h3>Tools</h3>
+<a href="markets.html">Markets</a>
+<a href="tools.html">Tools</a>
+<a href="dashboard.html">Dashboard</a>
+</div>
+</div>
+<div class="logout-message">
+<h2>You have been signed out.</h2>
+<p>Redirecting you to the home page...</p>
+</div>
+<footer class="footer">
+<p>© 2025 CryptoKid. Come back anytime.</p>
+</footer>
+<script>
+      apiKey: "AIzaSyBWoTFNHPtDygL5hvNLSycthL5pWrRFnGE",
+      projectId: "cryptokiddofficial",
+      storageBucket: "cryptokiddofficial.appspot.com",
+      messagingSenderId: "661589551503",
+      appId: "1:661589551503:web:6fe76fc440af292a43c3fa",
+      measurementId: "G-VX1NN7GRD3"
+    };
+      localStorage.removeItem("userLoggedIn");
+      setTimeout(() => window.location.href = "index.html", 2000);
+    });
+
+    fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1')
+      .then(res => res.json())
+      .then(data => {
+        const ticker = data.map(c => `${c.symbol.toUpperCase()}: $${c.current_price}`).join(' | ');
+        document.getElementById("ticker-text").innerText = ticker;
+      })
+      .catch(() => {
+        document.getElementById("ticker-text").innerText = "Ticker failed to load.";
+      });
+  </script>
+</body>
+</html>
+<!-- Firebase logic removed for migration. Insert new backend logic here. -->

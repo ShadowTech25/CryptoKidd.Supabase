@@ -1,0 +1,102 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Update Username – CryptoKid</title>
+  <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet"/>
+  <style>
+    body { background:#000; color:#FFD700; font-family:Arial, sans-serif; margin:0; padding:0; text-align:center; }
+    .market-ticker { background:#111; color:#FFD700; overflow:hidden; white-space:nowrap; padding:10px; font-size:0.9rem; border-bottom:1px solid #FFD700; }
+    .market-ticker span { display:inline-block; white-space:nowrap; padding-right:40px; animation: scroll-ticker 8s linear infinite; }
+    @keyframes scroll-ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
+    .navbar { background:#000; border-bottom:3px solid #FFD700; display:flex; justify-content:space-between; align-items:center; padding:15px 20px; font-family:'UnifrakturCook', cursive; }
+    .logo { font-size:2rem; color:#FFD700; }
+    .hamburger { width:30px; height:21px; display:flex; flex-direction:column; justify-content:space-between; cursor:pointer; }
+    .hamburger div { height:3px; background:#FFD700; border-radius:2px; }
+
+    .nav-wrapper { display:none; flex-direction:column; background:#111; padding:20px; }
+    .nav-wrapper.show { display:flex; }
+    .nav-section { border-top:1px solid #FFD700; padding:15px 10px; }
+    .nav-section h3 { margin:0 0 10px; font-size:1rem; text-transform:uppercase; color:#FFD700; text-align:center; }
+    .nav-section a { color:#FFD700; text-decoration:none; font-weight:bold; margin:6px 0; display:block; text-align:left; padding-left:10px; }
+    .nav-section a:hover { color:white; }
+
+    input, button { margin:10px auto; display:block; padding:10px; border-radius:5px; width:90%; max-width:300px; }
+    button { background:#FFD700; color:#000; font-weight:bold; border:none; cursor:pointer; }
+
+    .card { background:#111; border:1px solid #FFD700; border-radius:8px; padding:20px; margin:40px auto; width:90%; max-width:600px; }
+    .section-title { font-size:1.5rem; margin-bottom:15px; font-family:'UnifrakturCook', cursive; }
+  </style>
+</head>
+<body>
+  <div class="market-ticker"><span id="ticker-text">Loading live prices...</span></div>
+  <nav class="navbar">
+    <div class="logo">CryptoKid</div>
+    <div class="hamburger" onclick="document.getElementById('navMenu').classList.toggle('show')">
+      <div></div><div></div><div></div>
+    </div>
+  </nav>
+  <div class="nav-wrapper" id="navMenu">
+    <div class="nav-section"><h3>Main</h3><a href="index.html">Home</a><a href="about.html">About</a><a href="contact.html">Contact</a></div>
+    <div class="nav-section"><h3>Learn</h3><a href="articles.html">Articles</a><a href="guides.html">Guides</a></div>
+    <div class="nav-section"><h3>Tools</h3><a href="markets.html">Markets</a><a href="tools.html">Tools</a><a href="dashboard.html">Dashboard</a></div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">Update Username</div>
+    <p id="currentUsername">Loading current username...</p>
+    <input type="text" id="newUsername" placeholder="Enter new username"/>
+    <button onclick="updateUsername()">Save Username</button>
+    <p id="message"></p>
+    <button onclick="window.location.href='dashboard.html'" style="margin-top:15px;">Back to Dashboard</button>
+  </div>
+
+  <script type="module">
+
+      apiKey: "AIzaSyD4W0T6-0G9jYm0obX7gUzDWT1aahXzMmU",
+      projectId: "cryptokidd-ca13d",
+      appId: "1:658724474932:web:d764b523f37f727b2e3a61"
+    };
+
+    const db = getFirestore();
+
+      if (!user) return window.location.href = "login.html";
+      const userRef = doc(db, "users", user.uid);
+      const userSnap = await getDoc(userRef);
+      if (userSnap.exists()) {
+        const data = userSnap.data();
+        document.getElementById("currentUsername").innerText = "Current: " + (data.username || "None set");
+      }
+    });
+
+    window.updateUsername = async () => {
+      const newUsername = document.getElementById("newUsername").value;
+      if (!user || !newUsername) return;
+
+      try {
+        const userRef = doc(db, "users", user.uid);
+        await updateDoc(userRef, { username: newUsername });
+        document.getElementById("message").innerText = "Username updated successfully!";
+      } catch (err) {
+        document.getElementById("message").innerText = "Error: " + err.message;
+      }
+    };
+  </script>
+
+  <script>
+    fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1')
+      .then(res => res.json())
+      .then(data => {
+        const ticker = data.map(c => `${c.symbol.toUpperCase()}: $${c.current_price}`).join(' | ');
+        document.getElementById("ticker-text").innerText = ticker;
+      })
+      .catch(() => {
+        document.getElementById("ticker-text").innerText = "Ticker failed to load.";
+      });
+  </script>
+</body>
+</html>
+<!-- Firebase logic removed for migration. Insert new backend logic here. -->

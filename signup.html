@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign Up – CryptoKid</title>
+  <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet"/>
+  
+  <style>
+    body { background:#000; color:#FFD700; font-family:Arial, sans-serif; padding:20px; text-align:center; margin:0; }
+    h1 { font-family:'UnifrakturCook', cursive; }
+    input, button { margin:10px auto; display:block; padding:10px; border-radius:5px; width:90%; max-width:300px; }
+    button { background:#FFD700; color:#000; font-weight:bold; border:none; cursor:pointer; }
+
+    .market-ticker { background:#111; color:#FFD700; overflow:hidden; white-space:nowrap; padding:10px; font-size:0.9rem; border-bottom:1px solid #FFD700; }
+    .market-ticker span { display:inline-block; white-space:nowrap; padding-right:40px; animation: scroll-ticker 8s linear infinite; }
+    @keyframes scroll-ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
+    .navbar { background:#000; border-bottom:3px solid #FFD700; display:flex; justify-content:space-between; align-items:center; padding:15px 20px; font-family:'UnifrakturCook', cursive; }
+    .logo { font-size:2rem; color:#FFD700; }
+    .hamburger { width:30px; height:21px; display:flex; flex-direction:column; justify-content:space-between; cursor:pointer; }
+    .hamburger div { height:3px; background:#FFD700; border-radius:2px; }
+
+    .nav-wrapper { display:none; flex-direction:column; background:#111; padding:20px; }
+    .nav-wrapper.show { display:flex; }
+    .nav-section { border-top:1px solid #FFD700; padding:15px 10px; }
+    .nav-section h3 { margin:0 0 10px; font-size:1rem; text-transform:uppercase; color:#FFD700; text-align:center; }
+    .nav-section a { color:#FFD700; text-decoration:none; font-weight:bold; margin:6px 0; display:block; text-align:left; padding-left:10px; }
+    .nav-section a:hover { color:white; }
+  </style>
+<style>
+    body { background:#000; color:#FFD700; font-family:Arial, sans-serif; padding:20px; text-align:center; }
+    h1 { font-family:'UnifrakturCook', cursive; }
+    input, button { margin:10px auto; display:block; padding:10px; border-radius:5px; width:90%; max-width:300px; }
+    button { background:#FFD700; color:#000; font-weight:bold; border:none; cursor:pointer; }
+  </style>
+</head>
+<body>
+  <div class="market-ticker"><span id="ticker-text">Loading live prices...</span></div>
+  <nav class="navbar">
+    <div class="logo">CryptoKid</div>
+    <div class="hamburger" onclick="document.getElementById('navMenu').classList.toggle('show')">
+      <div></div><div></div><div></div>
+    </div>
+  </nav>
+  <div class="nav-wrapper" id="navMenu">
+    <div class="nav-section"><h3>Main</h3><a href="index.html">Home</a><a href="about.html">About</a><a href="contact.html">Contact</a></div>
+    <div class="nav-section"><h3>Learn</h3><a href="articles.html">Articles</a><a href="guides.html">Guides</a></div>
+    <div class="nav-section"><h3>Tools</h3><a href="markets.html">Markets</a><a href="tools.html">Tools</a><a href="dashboard.html">Dashboard</a></div>
+  </div>
+
+  <h1>Sign Up</h1>
+  <input type="email" id="email" placeholder="Email" />
+  <input type="password" id="password" placeholder="Password" />
+  <button onclick="signUp()">Create Account</button>
+  <p id="message"></p>
+
+  <script type="module">
+
+      apiKey: "AIzaSyD4W0T6-0G9jYm0obX7gUzDWT1aahXzMmU",
+      projectId: "cryptokidd-ca13d",
+      appId: "1:658724474932:web:d764b523f37f727b2e3a61"
+    };
+
+
+    window.signUp = async () => {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      try {
+        document.getElementById("message").innerText = "Signup successful! Redirecting...";
+        window.location.href = "dashboard.html";
+      } catch (error) {
+        document.getElementById("message").innerText = error.message;
+      }
+    };
+  </script>
+
+<script>
+fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1')
+  .then(res => res.json())
+  .then(data => {
+    const ticker = data.map(c => `${c.symbol.toUpperCase()}: $${c.current_price}`).join(' | ');
+    document.getElementById("ticker-text").innerText = ticker;
+  })
+  .catch(() => {
+    document.getElementById("ticker-text").innerText = "Ticker failed to load.";
+  });
+</script>
+</body>
+</html>
+<!-- Firebase logic removed for migration. Insert new backend logic here. -->
